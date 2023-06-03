@@ -1,0 +1,6 @@
+.elements__img{
+    border-radius: 10px 10px 0 0;
+    object-fit: cover;
+    max-width: 282px;
+    min-height: 282px;
+}

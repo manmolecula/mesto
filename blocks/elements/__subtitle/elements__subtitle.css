@@ -1,0 +1,11 @@
+.elements__subtitle{
+    background-color: white;
+    margin-top: -5px;
+    border-radius: 0 0 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Inter', Arial, sans-serif;
+    font-weight: 900;
+    padding: 25px 30px 31px 21px;
+}

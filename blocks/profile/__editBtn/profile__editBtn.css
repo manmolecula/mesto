@@ -1,0 +1,6 @@
+.profile__editBtn{
+    margin-left: 18px;
+}
+.profile__editBtn:hover{
+    opacity: .6;
+}

@@ -1,0 +1,6 @@
+.profile__addBtn{
+    margin-left: auto;
+}
+.profile__addBtn:hover{
+    opacity: .6;
+}
