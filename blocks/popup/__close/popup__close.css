@@ -4,6 +4,7 @@
     min-width: 32px;
     min-height: 32px;
     background-color: transparent;
+    background-repeat: no-repeat;
     border: none;
     cursor: pointer;
     top: -10%;
