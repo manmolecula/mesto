@@ -2,5 +2,17 @@
     font-weight: 400;
     font-size: 18px;
     line-height: 21.78px;
-    margin: 0;
+    margin: 10px 0 0 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 320px;
+}
+@media screen and (max-width:608px){
+    .profile__subtitle{
+        margin-top: 12px;
+        margin-left: 17px;
+        font-size: 14px;
+        line-height: 16.94px;
+    }
 }

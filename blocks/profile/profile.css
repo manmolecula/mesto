@@ -3,3 +3,8 @@
     align-items: center;
     margin-bottom: 51px;
 }
+@media screen and (max-width: 608px){
+    .profile{
+        flex-direction: column;
+    }
+}
