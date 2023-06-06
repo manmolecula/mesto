@@ -6,79 +6,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesto</title>
     <link rel="stylesheet" href="pages/index.css">
-    <script defer src="./script.js"></script>
+    <script defer src="./scripts/script.js"></script>
 </head>
 <body class="body">
     <div class="root">
         <header class="header">
             <img src="./images/logo.svg" alt="Логотип Место" class="header__logo">
         </header>
+        <section class="popup">
+            <div class="popup__container">
+                <button type="button" class="popup__close"></button>
+                <h2 class="popup__title">Редактировать профиль</h2>
+                <form name="popup" class="popup__form">
+                    <input class="popup__input popup__input_name" name="title" type="text" placeholder="Введите новое имя">
+                    <input class="popup__input popup__input_subtitle" name="subtitle" type="text" placeholder="Введите новое описание">
+                    <button class="popup__btn" type="submit">Сохранить</button>
+                </form>
+            </div>
+        </section>
         <main class="main">
-            <section class="popup">
-                <div class="popup__container">
-                    <button type="button" class="popup__close"></button>
-                    <h2 class="popup__title">Редактировать профиль</h2>
-                    <form class="popup__form">
-                        <input class="popup__name" name="title" type="text" placeholder="Введите новое имя">
-                        <input class="popup__subtitle" name="subtitle" type="text" placeholder="Введите новое описание">
-                        <button class="popup__btn" type="submit">Сохранить</button>
-                    </form>
-                </div>
-            </section>
             <section class="profile">
                 <img src="./images/Avatar.png" alt="Фото профиля" class="profile__avatar">
                 <div class="profile__profile-info">
                     <div class="profile__profile-title">
                         <h1 class="profile__name">Жак-Ив Кусто</h1>
-                        <button class="profile__editBtn"></button>
+                        <button type="button" class="profile__edit-btn"></button>
                     </div>
                     <p class="profile__subtitle">Исследователь океана</p>
                 </div>
-                <button class="profile__addBtn"></button>
+                <button type="button" class="profile__add-btn"></button>
             </section>
             <section class="elements">
-                <div class="elements__el">
-                    <img src="./images/karachaevsk.jpg" alt="Карачаевск" class="elements__img">
-                    <div class="elements__subtitle">
-                        <h2 class="elements__place">Карачаевск</h2>
-                        <button class="elements__like"></button>
-                    </div>
-                </div>
-                <div class="elements__el">
-                    <img src="./images/elbrus.jpg" alt="Эльбрус" class="elements__img">
-                    <div class="elements__subtitle">
-                        <h2 class="elements__place">Гора Эльбрус</h2>
-                        <button class="elements__like"></button>
-                    </div>
-                </div>
-                <div class="elements__el">
-                    <img src="./images/dombai.jpg" alt="Домбай" class="elements__img">
-                    <div class="elements__subtitle">
-                        <h2 class="elements__place">Домбай</h2>
-                        <button class="elements__like"></button>
-                    </div>
-                </div>
-                <div class="elements__el">
-                    <img src="./images/kosa.jpg" alt="Куршская коса" class="elements__img">
-                    <div class="elements__subtitle">
-                        <h2 class="elements__place">Куршская коса</h2>
-                        <button class="elements__like"></button>
-                    </div>
-                </div>
-                <div class="elements__el">
-                    <img src="./images/kizhi.jpg" alt="Кижи Карелия" class="elements__img">
-                    <div class="elements__subtitle">
-                        <h2 class="elements__place">Кижи, Карелия</h2>
-                        <button class="elements__like"></button>
-                    </div>
-                </div>
-                <div class="elements__el">
-                    <img src="./images/petergof.jpg" alt="Петергоф" class="elements__img">
-                    <div class="elements__subtitle">
-                        <h2 class="elements__place">Петегроф</h2>
-                        <button class="elements__like"></button>
-                    </div>
-                </div>
+                <ul class="elements__list">
+                    <li class="elements__el">
+                        <img src="./images/karachaevsk.jpg" alt="Карачаевск" class="elements__img">
+                        <div class="elements__subtitle">
+                            <h2 class="elements__place">Карачаевск</h2>
+                            <button type="button" class="elements__like"></button>
+                        </div>
+                    </li>
+                    <li class="elements__el">
+                        <img src="./images/elbrus.jpg" alt="Эльбрус" class="elements__img">
+                        <div class="elements__subtitle">
+                            <h2 class="elements__place">Гора Эльбрус</h2>
+                            <button type="button" class="elements__like"></button>
+                        </div>
+                    </li>
+                    <li class="elements__el">
+                        <img src="./images/dombai.jpg" alt="Домбай" class="elements__img">
+                        <div class="elements__subtitle">
+                            <h2 class="elements__place">Домбай</h2>
+                            <button type="button" class="elements__like"></button>
+                        </div>
+                    </li>
+                    <li class="elements__el">
+                        <img src="./images/kosa.jpg" alt="Куршская коса" class="elements__img">
+                        <div class="elements__subtitle">
+                            <h2 class="elements__place">Куршская коса</h2>
+                            <button type="button" class="elements__like"></button>
+                        </div>
+                    </li>
+                    <li class="elements__el">
+                        <img src="./images/kizhi.jpg" alt="Кижи Карелия" class="elements__img">
+                        <div class="elements__subtitle">
+                            <h2 class="elements__place">Кижи, Карелия</h2>
+                            <button type="button" class="elements__like"></button>
+                        </div>
+                    </li>
+                    <li class="elements__el">
+                        <img src="./images/petergof.jpg" alt="Петергоф" class="elements__img">
+                        <div class="elements__subtitle">
+                            <h2 class="elements__place">Петегроф</h2>
+                            <button type="button" class="elements__like"></button>
+                        </div>
+                    </li>
+                </ul>
             </section>
         </main>
         <footer class="footer">

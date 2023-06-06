@@ -1,6 +1,5 @@
 .popup__btn{
-    padding: 16px 125px;
-    font-family: 'Inter', Arial, sans-serif;
+    padding: 14px 132px;
     font-size: 18px;
     line-height: 21.78px;
     font-weight: 400;
@@ -9,6 +8,7 @@
     border: none;
     cursor: pointer;
     border-radius: 2px;
+    margin-top: 18px;
 }
 .popup__btn:hover{
     opacity: .8;
@@ -18,5 +18,6 @@
         font-size: 14px;
         line-height: 16.94px;
         padding: 14px 82px;
+        margin-top: 15px;
     }
 }

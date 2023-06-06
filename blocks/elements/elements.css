@@ -1,18 +1,5 @@
 .elements{
-    display: grid;
-    grid-template-columns: repeat(3, minmax(min-content, max-content));
-    gap: 20px 17px;
     justify-items: stretch;
     align-items: stretch;
     align-self: center;
-}
-@media screen and (max-width: 900px) {
-    .elements {
-    grid-template-columns: repeat(2, minmax(min-content, max-content));
-    }
-}
-@media screen and (max-width: 608px) {
-    .elements {
-    grid-template-columns: repeat(1, minmax(min-content, max-content));
-    }
 }
