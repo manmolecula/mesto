@@ -42,32 +42,51 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+function cards(){
+    let card = cardTemplate.querySelector('.elements__el').cloneNode(true);
+    card.querySelector('#new-img').src = link.value;
+    card.querySelector('#new-place').textContent = title.value;
+    elList.prepend(card);
+
+    let likeList = document.querySelector('.elements__like');
+    likeList.addEventListener('click',()=>{
+      likeList.classList.toggle('elements__like_active');
+    });
+    
+    let deleteCard = document.querySelector('.elements__trash');
+    deleteCard.addEventListener('click',()=>{
+      deleteCard.closest('.elements__el').remove(); 
+    });
+};
+function like(){
+  let likeList = document.querySelectorAll('.elements__like');
+  likeList.forEach((el)=>{ 
+      el.addEventListener('click',()=>{ 
+        el.classList.toggle('elements__like_active'); 
+      }) 
+  }); 
+};
+function deleteCard(){
+  let deleteCard = document.querySelectorAll('.elements__trash');
+  deleteCard.forEach((el)=>{ 
+    el.addEventListener('click',(el)=>{
+      el.target.closest('.elements__el').remove(); 
+    });
+});
+};
+function closeForm(){
+    popupEdit.classList.remove('popup_active');
+    popupAdd.classList.remove('popup_active');
+};
+
 for (let i = 0; i < initialCards.length; i++) {
   let card = cardTemplate.querySelector('.elements__el').cloneNode(true);
   card.querySelector('#new-img').src = initialCards[i].link;
   card.querySelector('#new-place').textContent = initialCards[i].name;
   elList.append(card);
 }
-function cards(){
-    let card = cardTemplate.querySelector('.elements__el').cloneNode(true);
-    card.querySelector('#new-img').src = title.value;
-    card.querySelector('#new-place').textContent = link.value;
-    elList.prepend(card);
-};
-function like(){
-  let likeList = document.querySelectorAll('.elements__like'); 
-  console.log(likeList);
-  likeList.forEach((el)=>{ 
-      el.addEventListener('click',()=>{ 
-      el.classList.toggle('elements__like_active'); 
-      }) 
-  }); 
-};
 like();
-function closeForm(){
-    popupEdit.classList.remove('popup_active');
-    popupAdd.classList.remove('popup_active');
-};
+deleteCard();
 
 edit.addEventListener('click', function openForm(){
     popupEdit.classList.add('popup_active');
@@ -92,5 +111,4 @@ formAdd.addEventListener('submit', function editForm(evt){
   evt.preventDefault();
   cards();
   closeForm();
-  like();
 });
