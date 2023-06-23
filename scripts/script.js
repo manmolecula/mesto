@@ -21,37 +21,34 @@ const cardPlace = card.querySelector('.elements__place');
 const elList = document.querySelector('.elements__list');
 const initialCards = [
   {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   },
   {
     name: 'Холмогорский район',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
   },
   {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  } 
 ];
 
 
-function cards(link, title){
-    let card = cardTemplate.querySelector('.elements__el').cloneNode(true);
-    card.querySelector('#new-img').src = link;
-    card.querySelector('#new-place').textContent = title;
-    elList.prepend(card);
+function renderCards(link, title){
+    createCard(link, title);
 
     like();
     
@@ -59,6 +56,13 @@ function cards(link, title){
 
     imgPopup(title);
 };
+
+function createCard(link, title) {
+  let card = cardTemplate.querySelector('.elements__el').cloneNode(true);
+    card.querySelector('#new-img').src = link;
+    card.querySelector('#new-place').textContent = title;
+    elList.prepend(card);
+}
 
 function like(){
   let likeList = document.querySelector('.elements__like');
@@ -91,7 +95,7 @@ function imgPopup(title){
 
 
 initialCards.forEach(function (item){
-  cards(item.link, item.name);
+  renderCards(item.link, item.name);
 });
 
 edit.addEventListener('click', function openForm(){
@@ -115,6 +119,6 @@ add.addEventListener('click', function openForm(){
 closeAdd.addEventListener('click', closeForm);
 formAdd.addEventListener('submit', function editForm(evt){
   evt.preventDefault();
-  cards(link.value, title.value);
+  renderCards(link.value, title.value);
   closeForm();
 });
