@@ -3,8 +3,7 @@ function createCard(link, title) {
     card.querySelector('#new-img').src = link;
     card.querySelector('#new-img').alt = 'Картинка карточки';
     card.querySelector('#new-place').textContent = title;
-    elList.prepend(card);
-
+    addCard(card);
     const likeList = card.querySelector('.elements__like');
     likeList.addEventListener('click',()=>{
       likeList.classList.toggle('elements__like_active');
@@ -23,6 +22,9 @@ function createCard(link, title) {
     });
 }
 
+function addCard(card){
+  elList.prepend(card);
+}
 function closePopup(popup){
   popup.classList.remove('popup_active');
 };
