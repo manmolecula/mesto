@@ -2,8 +2,12 @@ const edit = document.querySelector('.profile__edit-btn');
 const add = document.querySelector('.profile__add-btn');
 const closeEdit = document.querySelector('#close-edit');
 const closeAdd = document.querySelector('#close-add');
+const closeImg = document.querySelector('#close-img');
 const popupEdit = document.querySelector('#popup-edit');
 const popupAdd = document.querySelector('#popup-add');
+const popupImg = document.querySelector('#popup-img');
+const image = document.querySelector('.popup__img');
+const caption = document.querySelector('.popup__caption');
 const formEdit = document.querySelector('#form-edit');
 const formAdd = document.querySelector('#form-add');
 const popupName = document.querySelector('#form-name');
@@ -13,7 +17,6 @@ const link = document.querySelector('#form-link');
 const profileName = document.querySelector('.profile__name');
 const profileSub = document.querySelector('.profile__subtitle');
 const cardTemplate = document.querySelector('#card').content;
-const cardImg = card.querySelector('.elements__img');
 const cardPlace = card.querySelector('.elements__place');
 const elList = document.querySelector('.elements__list');
 const initialCards = [
@@ -42,51 +45,54 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-function cards(){
+
+
+function cards(link, title){
     let card = cardTemplate.querySelector('.elements__el').cloneNode(true);
-    card.querySelector('#new-img').src = link.value;
-    card.querySelector('#new-place').textContent = title.value;
+    card.querySelector('#new-img').src = link;
+    card.querySelector('#new-place').textContent = title;
     elList.prepend(card);
 
-    let likeList = document.querySelector('.elements__like');
+    like();
+    
+    deleteCard();
+
+    imgPopup(title);
+};
+
+function like(){
+  let likeList = document.querySelector('.elements__like');
     likeList.addEventListener('click',()=>{
       likeList.classList.toggle('elements__like_active');
     });
-    
-    let deleteCard = document.querySelector('.elements__trash');
-    deleteCard.addEventListener('click',()=>{
-      deleteCard.closest('.elements__el').remove(); 
-    });
-};
-function like(){
-  let likeList = document.querySelectorAll('.elements__like');
-  likeList.forEach((el)=>{ 
-      el.addEventListener('click',()=>{ 
-        el.classList.toggle('elements__like_active'); 
-      }) 
-  }); 
 };
 function deleteCard(){
-  let deleteCard = document.querySelectorAll('.elements__trash');
-  deleteCard.forEach((el)=>{ 
-    el.addEventListener('click',(el)=>{
-      el.target.closest('.elements__el').remove(); 
-    });
-});
+  let deleteCard = document.querySelector('.elements__trash');
+  deleteCard.addEventListener('click',()=>{
+    deleteCard.closest('.elements__el').remove(); 
+  });
 };
+
 function closeForm(){
     popupEdit.classList.remove('popup_active');
     popupAdd.classList.remove('popup_active');
+    popupImg.classList.remove('popup_active');
 };
 
-for (let i = 0; i < initialCards.length; i++) {
-  let card = cardTemplate.querySelector('.elements__el').cloneNode(true);
-  card.querySelector('#new-img').src = initialCards[i].link;
-  card.querySelector('#new-place').textContent = initialCards[i].name;
-  elList.append(card);
-}
-like();
-deleteCard();
+function imgPopup(title){
+  let openPopup = document.querySelector('.elements__img');
+    openPopup.addEventListener('click',(el)=>{
+      popupImg.classList.add('popup_active');
+      image.src = el.target.closest('.elements__img').src;
+      caption.textContent = title;
+    });
+    closeImg.addEventListener('click', closeForm);
+};
+
+
+initialCards.forEach(function (item){
+  cards(item.link, item.name);
+});
 
 edit.addEventListener('click', function openForm(){
     popupEdit.classList.add('popup_active');
@@ -109,6 +115,6 @@ add.addEventListener('click', function openForm(){
 closeAdd.addEventListener('click', closeForm);
 formAdd.addEventListener('submit', function editForm(evt){
   evt.preventDefault();
-  cards();
+  cards(link.value, title.value);
   closeForm();
 });
