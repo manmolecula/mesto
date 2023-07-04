@@ -19,6 +19,7 @@ function createCard(link, title) {
       openPopup(popupImg);
       image.src = el.target.closest('.elements__img').src;
       caption.textContent = title;
+      overlayClose();
     });
 }
 
@@ -54,6 +55,7 @@ editBtn.addEventListener('click', function openForm(){
   openPopup(popupEdit);
   popupName.value = profileName.textContent;
   subtitle.value = profileSub.textContent;
+  overlayClose();
 });
 closeEdit.addEventListener('click', () => closePopup(popupEdit));
 formEdit.addEventListener('submit', (el) => submitEdit(el));
@@ -61,8 +63,27 @@ formEdit.addEventListener('submit', (el) => submitEdit(el));
 addBtn.addEventListener('click', function openForm(){
   openPopup(popupAdd);
   formAdd.reset();
+  overlayClose();
 });
 closeAdd.addEventListener('click', () => closePopup(popupAdd));
 formAdd.addEventListener('submit', (el) => submitAdd(el));
 
 closeImg.addEventListener('click', () => closePopup(popupImg));
+
+function escapeClose() {
+  document.addEventListener('keydown', function(evt){
+    if(evt.key === 'Escape'){
+      const popupToClose = document.querySelector('.popup_active');
+      closePopup(popupToClose);
+    }
+  })
+}
+escapeClose();
+function overlayClose(){
+  const popupToClose = document.querySelector('.popup_active'); 
+  popupToClose.addEventListener('click', function(evt){
+    if(evt.target === popupToClose){
+    closePopup(popupToClose);
+    }
+  })
+}
