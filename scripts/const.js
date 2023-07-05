@@ -26,6 +26,7 @@ const profileSub = document.querySelector('.profile__subtitle');
 const cardTemplate = document.querySelector('#card').content;
 const cardPlace = card.querySelector('.elements__place');
 const elList = document.querySelector('.elements__list');
+const popups = document.querySelectorAll('.popup')
 const initialCards = [
   {
     name: 'Байкал',

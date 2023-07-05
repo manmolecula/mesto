@@ -19,7 +19,6 @@ function createCard(link, title) {
       openPopup(popupImg);
       image.src = el.target.closest('.elements__img').src;
       caption.textContent = title;
-      overlayClose();
     });
 }
 
@@ -28,9 +27,11 @@ function addCard(card){
 }
 function closePopup(popup){
   popup.classList.remove('popup_active');
+  document.removeEventListener('keydown', escapeClose);
 };
 function openPopup(popup){
   popup.classList.add('popup_active');
+  document.addEventListener('keydown', escapeClose);
 };
 
 function submitAdd(el){
@@ -55,35 +56,34 @@ editBtn.addEventListener('click', function openForm(){
   openPopup(popupEdit);
   popupName.value = profileName.textContent;
   subtitle.value = profileSub.textContent;
-  overlayClose();
 });
-closeEdit.addEventListener('click', () => closePopup(popupEdit));
 formEdit.addEventListener('submit', (el) => submitEdit(el));
 
 addBtn.addEventListener('click', function openForm(){
   openPopup(popupAdd);
   formAdd.reset();
-  overlayClose();
+  const addSubmitBtn = formAdd.querySelector('.popup__btn');
+  disabledButton(addSubmitBtn, config);
 });
-closeAdd.addEventListener('click', () => closePopup(popupAdd));
 formAdd.addEventListener('submit', (el) => submitAdd(el));
 
-closeImg.addEventListener('click', () => closePopup(popupImg));
-
-function escapeClose() {
-  document.addEventListener('keydown', function(evt){
+function escapeClose(evt){
     if(evt.key === 'Escape'){
       const popupToClose = document.querySelector('.popup_active');
       closePopup(popupToClose);
     }
-  })
 }
-escapeClose();
-function overlayClose(){
-  const popupToClose = document.querySelector('.popup_active'); 
-  popupToClose.addEventListener('click', function(evt){
-    if(evt.target === popupToClose){
-    closePopup(popupToClose);
-    }
+
+function overlayXClose(){
+  popups.forEach((popup) => {
+    popup.addEventListener('mousedown', (evt) => {
+        if (evt.target.classList.contains('popup_active')) {
+          closePopup(popup);
+        }
+        if (evt.target.classList.contains('popup__close')) {
+          closePopup(popup);
+        }
+    })
   })
-}
+};
+overlayXClose();
