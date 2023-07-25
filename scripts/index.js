@@ -30,9 +30,13 @@ import {
 }
 from './Card.js';
 
-function createCard(link, title) {
-  const newCard = new Card(link, title, cardTemplate, image, caption, elList, popupImg);
-  newCard.createCard();
+function createCards(link, title) {
+  const newCard = new Card(link, title, cardTemplate, image, caption, popupImg, openPopup);
+  return newCard.createCard();
+}
+
+function addCard(card) {
+  elList.prepend(card);
 }
 
 function closePopup(popup) {
@@ -42,13 +46,11 @@ function closePopup(popup) {
 export function openPopup(popup) {
   popup.classList.add('popup_active');
   document.addEventListener('keydown', escapeClose);
-  formAddValidation.errorCleaner();
-  formEditValidation.errorCleaner();
 };
 
 function submitAdd(el) {
   el.preventDefault();
-  createCard(link.value, title.value);
+  addCard(createCards(link.value, title.value));
   closePopup(popupAdd);
 }
 
@@ -58,20 +60,27 @@ function submitEdit(el) {
   profileSub.textContent = subtitle.value;
   closePopup(popupEdit);
 }
-initialCards.forEach(function(item) {
-  createCard(item.link, item.name);
-});
-editBtn.addEventListener('click', function openForm() {
+
+function openEditForm(){
   openPopup(popupEdit);
   popupName.value = profileName.textContent;
   subtitle.value = profileSub.textContent;
-});
-formEdit.addEventListener('submit', (el) => submitEdit(el));
-addBtn.addEventListener('click', function openForm() {
+  formEditValidation.errorCleaner();
+}
+
+function openAddForm(){
   openPopup(popupAdd);
   formAdd.reset();
   formAddValidation.disabledButton();
+  formAddValidation.errorCleaner();
+}
+
+initialCards.forEach(function(item) {
+  addCard(createCards(item.link, item.name));
 });
+editBtn.addEventListener('click', openEditForm);
+formEdit.addEventListener('submit', (el) => submitEdit(el));
+addBtn.addEventListener('click', openAddForm);
 formAdd.addEventListener('submit', (el) => submitAdd(el));
 
 function escapeClose(evt) {
@@ -85,8 +94,6 @@ function overlayXClose() {
   popups.forEach((popup) => {
       popup.addEventListener('mousedown', (evt) => {
           if (evt.target.classList.contains('popup_active') || evt.target.classList.contains('popup__close')) {
-              formEditValidation.errorCleaner();
-              formAddValidation.errorCleaner();
               closePopup(popup);
           }
       })
