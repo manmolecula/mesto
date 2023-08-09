@@ -10,6 +10,7 @@ export class Section{
         });
     }
     addItem(element){
+        console.log(this._containerSelector);
         this._containerSelector.prepend(element);
     }
 }

@@ -1,11 +1,13 @@
 import { Popup } from "./Popup.js";
 export class PopupWithForm extends Popup{
-    constructor(popupSelector, {submitHandler}){
+    constructor(popupSelector, {formSelector ,submitHandler = null}){
         super(popupSelector);
         this._submitHandler = submitHandler;
+        this._formSelector = formSelector;
+        this._formElement = this._popupElement.querySelector('.popup__form');
     }
     _getInputValues(){
-        this._inputList = super._popupSelector.querySelectorAll('.popup__input');
+        this._inputList = this._formElement.querySelectorAll('.popup__input');
 
         // создаём пустой объект
         this._formValues = {};
@@ -14,6 +16,7 @@ export class PopupWithForm extends Popup{
         [...this._inputList].forEach(input => {
           this._formValues[input.name] = input.value;
         });
+        
       
         // возвращаем объект значений
         return this._formValues;
@@ -21,18 +24,18 @@ export class PopupWithForm extends Popup{
 
     setEventListeners(){
         super.setEventListeners();
-        super._popupSelector.addEventListener('submit', (evt) => {
+        this._formElement.addEventListener('submit', (evt) => {
             evt.preventDefault();
 
             this._submitHandler(this._getInputValues());
         
-            super._popupSelector.close();
+            this.close();
           });
         
     }
     close(){
-        super._popupSelector.classList.remove('popup_active');
+        this._popupElement.classList.remove('popup_active');
         document.removeEventListener('keydown', super._handleEscClose);
-        super._popupSelector.reset();
+        this._formElement.reset();
     }
 }

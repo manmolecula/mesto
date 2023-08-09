@@ -23,6 +23,7 @@ export class Card {
     }
 
     _likeActiveToggle() {
+        console.log(this._likeList);
         this._likeList.classList.toggle('elements__like_active');
     }
 
