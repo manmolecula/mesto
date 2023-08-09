@@ -109,7 +109,7 @@ const popupWithFormEdit = new PopupWithForm('#popup-edit', {
 const popupWithFormAdd = new PopupWithForm('#popup-add', {
   formSelector: '#form-add',
   submitHandler: (data) =>{
-    const  newCard = new Card(data.link, data.name, cardTemplate, handleCardClick);
+    const  newCard = new Card(data.link, data.title, cardTemplate, handleCardClick);
     elList.prepend(newCard.createCard());
   }
 });
