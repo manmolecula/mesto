@@ -1,14 +1,12 @@
 import { Popup } from "./Popup.js";
 export class PopupWithForm extends Popup{
-    constructor(popupSelector, {formSelector ,submitHandler = null}){
+    constructor(popupSelector, {submitHandler = null}){
         super(popupSelector);
         this._submitHandler = submitHandler;
-        this._formSelector = formSelector;
         this._formElement = this._popupElement.querySelector('.popup__form');
+        this._inputList = this._formElement.querySelectorAll('.popup__input');
     }
     _getInputValues(){
-        this._inputList = this._formElement.querySelectorAll('.popup__input');
-
         // создаём пустой объект
         this._formValues = {};
       
@@ -29,13 +27,11 @@ export class PopupWithForm extends Popup{
 
             this._submitHandler(this._getInputValues());
         
-            this.close();
           });
         
     }
     close(){
-        this._popupElement.classList.remove('popup_active');
-        document.removeEventListener('keydown', super._handleEscClose);
+        super.close();
         this._formElement.reset();
     }
 }

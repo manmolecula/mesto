@@ -28,6 +28,6 @@ export class Card {
 
     _deleteCard() {
         this._card.remove();
-        this._element = null;
+        this._card = null;
     }
 }

@@ -1,6 +1,5 @@
 export class FormValidator {
     constructor(config, formElement) {
-        this._formSelector = config.formSelector;
         this._inputSelector = config.inputSelector;
         this._submitButtonSelector = config.submitButtonSelector;
         this._inactiveButtonClass = config.inactiveButtonClass;
@@ -9,7 +8,7 @@ export class FormValidator {
         this._inputList = formElement.querySelectorAll(this._inputSelector);
         this._submitButtonElement = formElement.querySelector(this._submitButtonSelector);
     }
-    errorCleaner() {
+    cleanErrors() {
         this._inputList.forEach((inputEl) => {
             const errorElement = this._formElement.querySelector(`#${inputEl.name}-error`);
             this._hideError(inputEl, errorElement);
@@ -26,21 +25,16 @@ export class FormValidator {
                 this._toggleButtonState(this._formElement.checkValidity());
             })
         })
-        this._formElement.addEventListener('submit', (evt) => {
-            evt.preventDefault();
-            if (!this._formElement.checkValidity()) return;
-            console.log('Форма отправлена!');
-        })
     }
     _toggleButtonState(isActive) {
         if (!isActive) {
-            this.disabledButton();
+            this.disableButton();
         } else {
             this.enableButton();
         }
     }
-    disabledButton() {
-        this._submitButtonElement.disabled = 'disabled';
+    disableButton() {
+        this._submitButtonElement.disabled = true;
         this._submitButtonElement.classList.add(this._inactiveButtonClass);
     }
     enableButton() {

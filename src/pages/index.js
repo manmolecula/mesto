@@ -1,25 +1,15 @@
 import './index.css';
 import {
-  config,
+  validationConfig,
   initialCards,
   editBtn,
   addBtn,
-  popupEdit,
-  popupAdd,
-  popupImg,
-  image,
-  caption,
   formEdit,
   formAdd,
-  popupName,
-  subtitle,
-  title,
-  link,
   profileName,
   profileSub,
   cardTemplate,
-  elList,
-  popups,
+  cardsContainer,
   profileNameValue,
   profileSubValue,
 }
@@ -37,10 +27,6 @@ import {
 }
 from '../components/Section.js';
 import {
-  Popup
-}
-from '../components/Popup.js';
-import {
   PopupWithImage
 }
 from '../components/PopupWithImage.js';
@@ -53,89 +39,80 @@ import {
 }
 from '../components/UserInfo.js';
 
-// const popupEditForm = new PopupWithForm(popupEdit,{
-//   submitHandler: (data) => {
-//     userInfo.setUserInfo({
-//       name: data.name,
-//       info: data.info
-//     })
-//     userInfo.updateUserInfo();
-//     popupEditForm.close();
-//   }
-// });
-// console.log(popupEditForm);
-// popupEditForm.setEventListeners();
-// editBtn.addEventListener('click', () => {
-//   const userData = userInfo.getUserInfo();
-//   profileNameValue.value = userData.name;
-//   profileSubValue.value = userData.info;
-//   popupEditForm.open();
-// });
 
 const userInfo = new UserInfo({
-  name: profileName,
-  info: profileSub
+  nameElement: profileName,
+  infoElement: profileSub
 });
-
-userInfo.setUserInfo({name: 'Жак-Ив Кусто', info: 'Исследователь океана'});
-userInfo.updateUserInfo();
 
 const cardSection = new Section({
   items: initialCards,
   renderer: (data) => {
-    const newCard = new Card(data.link, data.name, cardTemplate, handleCardClick);
-    return newCard.createCard();
+    const newCard = newClassCardCreate(data);
+    cardSection.addItem(newCard.createCard());
   }
-}, elList);
+}, cardsContainer);
 cardSection.render();
 
 const popupWithImage = new PopupWithImage('#popup-img');
 popupWithImage.setEventListeners();
 
-function handleCardClick(imgLink, caption){
-  popupWithImage.open(imgLink, caption);
-}
-
 const popupWithFormEdit = new PopupWithForm('#popup-edit', {
-  formSelector: '#form-edit',
   submitHandler: (data) =>{
     userInfo.setUserInfo({
       name: data.name,
       info: data.info
     });
-    userInfo.updateUserInfo();
+    popupWithFormEdit.close();
   }
 });
 const popupWithFormAdd = new PopupWithForm('#popup-add', {
-  formSelector: '#form-add',
   submitHandler: (data) =>{
-    const  newCard = new Card(data.link, data.title, cardTemplate, handleCardClick);
-    elList.prepend(newCard.createCard());
+    const newCard = newClassCardCreate(data);
+    cardsContainer.prepend(newCard.createCard());
+    popupWithFormAdd.close();
   }
 });
 
-popupWithFormEdit.setEventListeners();
-popupWithFormAdd.setEventListeners();
+const formEditValidation = new FormValidator(validationConfig, formEdit);
+const formAddValidation = new FormValidator(validationConfig, formAdd);
+
+
+function newClassCardCreate(data){
+  console.log(data);
+  const  newCard = new Card(data.link, data.name || data.title, cardTemplate, handleCardClick);
+  return newCard;
+}
+
+function handleCardClick(imgLink, caption){
+  popupWithImage.open(imgLink, caption);
+}
 
 function openEditForm(){
   const userData = userInfo.getUserInfo();
-  profileNameValue.value = userData.name;
-  profileSubValue.value = userData.info;
+  profileNameValue.value = userData.nameElement;
+  profileSubValue.value = userData.infoElement;
   popupWithFormEdit.open();
-  formEditValidation.errorCleaner();
+  formEditValidation.cleanErrors();
 }
 
 function openAddForm(){
   popupWithFormAdd.open();
-  formAddValidation.disabledButton();
-  formAddValidation.errorCleaner();
+  formAddValidation.disableButton();
+  formAddValidation.cleanErrors();
 }
+
+userInfo.setUserInfo({name: 'Жак-Ив Кусто', info: 'Исследователь океана'});
 
 addBtn.addEventListener('click', openAddForm);
 editBtn.addEventListener('click', openEditForm);
 
-const formEditValidation = new FormValidator(config, formEdit);
+popupWithFormEdit.setEventListeners();
+popupWithFormAdd.setEventListeners();
+
 formEditValidation.enableValidation();
-const formAddValidation = new FormValidator(config, formAdd);
 formAddValidation.enableValidation();
+
+
+
 

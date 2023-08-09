@@ -1,4 +1,4 @@
-const config = {
+const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__btn',
@@ -7,22 +7,12 @@ const config = {
 };
 const editBtn = document.querySelector('.profile__edit-btn');
 const addBtn = document.querySelector('.profile__add-btn');
-const popupEdit = document.querySelector('#popup-edit');
-const popupAdd = document.querySelector('#popup-add');
-const popupImg = document.querySelector('#popup-img');
-const image = document.querySelector('.popup__img');
-const caption = document.querySelector('.popup__caption');
 const formEdit = document.querySelector('#form-edit');
 const formAdd = document.querySelector('#form-add');
-const popupName = document.querySelector('#form-name');
-const subtitle = document.querySelector('#form-sub');
-const title = document.querySelector('#form-title');
-const link = document.querySelector('#form-link');
 const profileName = document.querySelector('.profile__name');
 const profileSub = document.querySelector('.profile__subtitle');
 const cardTemplate = document.querySelector('#card').content;
-const elList = document.querySelector('.elements__list');
-const popups = document.querySelectorAll('.popup');
+const cardsContainer = document.querySelector('.elements__list');
 const profileNameValue = document.querySelector('.popup__input_profile_name');
 const profileSubValue = document.querySelector('.popup__input_profile_subtitle');
 const initialCards = [{
@@ -45,26 +35,16 @@ const initialCards = [{
   link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
 }];
 export {
-  config,
+  validationConfig,
   initialCards,
   editBtn,
   addBtn,
-  popupEdit,
-  popupAdd,
-  popupImg,
-  image,
-  caption,
   formEdit,
   formAdd,
-  popupName,
-  subtitle,
-  title,
-  link,
   profileName,
   profileSub,
   cardTemplate,
-  elList,
-  popups,
+  cardsContainer,
   profileNameValue,
   profileSubValue
 };
