@@ -48,7 +48,7 @@ const userInfo = new UserInfo({
 const cardSection = new Section({
   items: initialCards,
   renderer: (data) => {
-    const newCard = newClassCardCreate(data);
+    const newCard = createCard(data);
     cardSection.addItem(newCard.createCard());
   }
 }, cardsContainer);
@@ -68,7 +68,7 @@ const popupWithFormEdit = new PopupWithForm('#popup-edit', {
 });
 const popupWithFormAdd = new PopupWithForm('#popup-add', {
   submitHandler: (data) =>{
-    const newCard = newClassCardCreate(data);
+    const newCard = createCard(data);
     cardsContainer.prepend(newCard.createCard());
     popupWithFormAdd.close();
   }
@@ -78,8 +78,7 @@ const formEditValidation = new FormValidator(validationConfig, formEdit);
 const formAddValidation = new FormValidator(validationConfig, formAdd);
 
 
-function newClassCardCreate(data){
-  console.log(data);
+function createCard(data){
   const  newCard = new Card(data.link, data.name || data.title, cardTemplate, handleCardClick);
   return newCard;
 }

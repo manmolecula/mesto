@@ -11,6 +11,6 @@ export class PopupWithImage extends Popup{
     
         this._image.src = imgLink;
         this._caption.textContent = caption;
-        this._image.alt = 'Название карточки';
+        this._image.alt = caption;
     }
 }
