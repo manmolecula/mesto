@@ -17,6 +17,7 @@ module.exports = (env) => {
       publicPath: ''
     },
   mode: 'development',
+  devtool: 'eval-source-map',
   devServer: {
     static: path.resolve(__dirname, './dist'),
     compress: true,
@@ -65,7 +66,7 @@ module.exports = (env) => {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: production ? 'styles/[name].[contenthash].css' : 'styles/[name].css'
+      filename: production ? '[name].[contenthash].css' : '[name].css'
     })
   ]
   } 

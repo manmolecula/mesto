@@ -47,6 +47,15 @@
                 </form>
             </div>
         </section>
+        <section id="popup-sure" class="popup">
+            <div class="popup__sure-container">
+                <button id="close-sure" type="button" class="popup__sure-close"></button>
+                <h2 class="popup__sure-title">Вы уверены?</h2>
+                <form novalidate id="form-sure" name="popup" class="popup__form">
+                    <button class="popup__sure-btn" type="submit">Да</button>
+                </form>
+            </div>
+        </section>
         <section id="popup-img" class="popup popup_place_img">
             <div class="popup__img-container">
                 <button id="close-img" type="button" class="popup__close popup__close_place_img"></button>
@@ -58,7 +67,7 @@
         </section>
         <main class="main">
             <section class="profile">
-                <img src="<%=require('./images/Avatar.png')%>" alt="Фото профиля" class="profile__avatar">
+                <img src="#" alt="Фото профиля" class="profile__avatar">
                 <div class="profile__profile-info">
                     <div class="profile__profile-title">
                         <h1 class="profile__name"></h1>
@@ -83,7 +92,11 @@
             <img id="new-img" src="#" class="elements__img">
             <div class="elements__subtitle">
                 <h2 id="new-place" class="elements__place"></h2>
-                <button type="button" class="elements__like"></button>
+                <ul class="elements__likelist">
+                    <button type="button" class="elements__like"></button>
+                    <p class="elements__like-number"></p>
+                </ul>
+                
             </div>
         </li>
     </template>

@@ -1,17 +1,18 @@
 import './index.css';
 import {
   validationConfig,
-  initialCards,
   editBtn,
   addBtn,
   formEdit,
   formAdd,
   profileName,
   profileSub,
+  profileAvatar,
   cardTemplate,
   cardsContainer,
   profileNameValue,
   profileSubValue,
+  configApi
 }
 from '../utils/const.js';
 import {
@@ -38,21 +39,27 @@ import {
   UserInfo
 }
 from '../components/UserInfo.js';
+import {
+  Api
+}
+from '../components/Api.js';
+import { PopupWithCardDeleter } from '../components/PopupWithCardDeleter';
 
+const api = new Api(configApi);
+
+let userId = null;
+
+api.getAllInfo()
+.then(([userData, postAll])=>{
+  userId = userData._id;
+  console.log(postAll);
+})
 
 const userInfo = new UserInfo({
   nameElement: profileName,
-  infoElement: profileSub
+  infoElement: profileSub,
+  imageElement: profileAvatar
 });
-
-const cardSection = new Section({
-  items: initialCards,
-  renderer: (data) => {
-    const newCard = createCard(data);
-    cardSection.addItem(newCard.createCard());
-  }
-}, cardsContainer);
-cardSection.render();
 
 const popupWithImage = new PopupWithImage('#popup-img');
 popupWithImage.setEventListeners();
@@ -61,14 +68,18 @@ const popupWithFormEdit = new PopupWithForm('#popup-edit', {
   submitHandler: (data) =>{
     userInfo.setUserInfo({
       name: data.name,
-      info: data.info
+      info: data.info,
+      image: data.image ? data.image : profileAvatar.src
     });
+    api.editProfile(data);
     popupWithFormEdit.close();
   }
 });
+
 const popupWithFormAdd = new PopupWithForm('#popup-add', {
   submitHandler: (data) =>{
-    const newCard = createCard(data);
+    api.postNewCard(data);
+    const newCard = createCard(data, cardTemplate);
     cardsContainer.prepend(newCard.createCard());
     popupWithFormAdd.close();
   }
@@ -77,10 +88,22 @@ const popupWithFormAdd = new PopupWithForm('#popup-add', {
 const formEditValidation = new FormValidator(validationConfig, formEdit);
 const formAddValidation = new FormValidator(validationConfig, formAdd);
 
+const popupConfirm = new PopupWithCardDeleter('#popup-sure', null);
+popupConfirm.setEventListeners();
+
 
 function createCard(data){
-  const  newCard = new Card(data.link, data.name || data.title, cardTemplate, handleCardClick);
+  const  newCard = new Card(data.owner ? data.owner._id : userId, data._id ? data._id : null, userId, data.link, data.name || data.title, data.likes ? data.likes.length : 0, cardTemplate, handleCardClick, handleCardDelete);
   return newCard;
+}
+
+function handleCardDelete(cardInstance){
+  popupConfirm.open();
+  popupConfirm.setActionSubmit(()=>{
+    api.deleteCard(cardInstance.getId())
+    .then(() => {cardInstance.remove(); popupConfirm.close();})
+    .catch(err => console.log(err))
+  })
 }
 
 function handleCardClick(imgLink, caption){
@@ -101,7 +124,21 @@ function openAddForm(){
   formAddValidation.cleanErrors();
 }
 
-userInfo.setUserInfo({name: 'Жак-Ив Кусто', info: 'Исследователь океана'});
+
+api.getUserInfo().then((data)=>{
+  userInfo.setUserInfo({name: data.name, info: data.about, image: data.avatar});
+})
+api.getInitialCards().then((data)=>{
+  const cardSection = new Section({
+    items: data,
+    renderer: (data) => {
+      const newCard = createCard(data);
+      cardSection.addItem(newCard.createCard());
+    }
+  }, cardsContainer);
+  cardSection.render();
+})
+
 
 addBtn.addEventListener('click', openAddForm);
 editBtn.addEventListener('click', openEditForm);
