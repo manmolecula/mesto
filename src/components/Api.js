@@ -26,6 +26,14 @@ export class Api{
         .then(this._onResponse)
     }
 
+    changeLike(cardId, isLiked) {
+        return fetch(`${this._url}/cards/${cardId}/likes`, {
+            method: isLiked ? 'DELETE' : 'PUT',
+            headers: this._headers,
+        })
+        .then(this._onResponse)
+    }
+
     editProfile(data){
         return fetch(`${this._url}/users/me`, {
             method: 'PATCH',
@@ -33,6 +41,17 @@ export class Api{
             body: JSON.stringify({
                 name: data.name,
                 about: data.info,
+            })
+        })
+        .then(this._onResponse)
+    }
+
+    editProfileAvatar(link){
+        return fetch(`${this._url}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify({
+                avatar: link
             })
         })
         .then(this._onResponse)
