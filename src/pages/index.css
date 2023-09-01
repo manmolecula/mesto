@@ -11,11 +11,11 @@
 @import url(../blocks/popup/__sure-container/popup__sure-container.css);
 @import url(../blocks/popup/__sure-btn/popup__sure-btn.css);
 @import url(../blocks/popup/__sure-title/popup__sure-title.css);
-@import url(../blocks/popup/__sure-close/popup__sure-close.css);
 @import url(../blocks/popup/__figure/popup__figure.css);
 @import url(../blocks/popup/__caption/popup__caption.css);
 @import url(../blocks/popup/__close/popup__close.css);
 @import url(../blocks/popup/__close/_place/popup__close_place_img.css);
+@import url(../blocks/popup/__close/_sure-padding/popup__close_sure-padding.css);
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__form/popup__form.css);
 @import url(../blocks/popup/__error/popup__error.css);

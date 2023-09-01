@@ -8,7 +8,10 @@ export class Section{
             this._renderer(item);
         });
     }
-    addItem(element){
+    appendItem(element){
         this._container.append(element);
+    }
+    prependItem(element){
+        this._container.prepend(element);
     }
 }

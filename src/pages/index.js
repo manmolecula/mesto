@@ -57,7 +57,7 @@ let userId = null;
 const cardSection = new Section({
   renderer: (data) => {
     const newCard = createCard(data);
-    cardSection.addItem(newCard.createCard());
+    cardSection.appendItem(newCard);
   }
 }, cardsContainer);
 
@@ -72,53 +72,58 @@ popupWithImage.setEventListeners();
 
 const popupWithFormEdit = new PopupWithForm('#popup-edit', {
   submitHandler: (data) =>{
-    const lastText = formEditSubmit.textContent;
-    formEditSubmit.textContent = 'Сохранение...';
+    popupWithFormEdit.renderLoading(true);
     api.editProfile(data)
     .then((dataFromServer) => {
       userInfo.setUserInfo({
         name: dataFromServer.name,
         info: dataFromServer.about,
-        image: dataFromServer.image ? dataFromServer.image : profileAvatar.src
+        image: dataFromServer.image ? dataFromServer.image : profileAvatar.src,
+        id: dataFromServer._id
       });
+      popupWithFormEdit.close();
     })
     .catch(err => console.log(err))
     .finally(()=>{
-      formEditSubmit.textContent = lastText;
+      popupWithFormEdit.renderLoading(false);
     });
-    popupWithFormEdit.close();
+    
   }
 });
 
 const popupWithFormAdd = new PopupWithForm('#popup-add', {
   submitHandler: (data) =>{
-    const lastText = formAddSubmit.textContent;
-    formAddSubmit.textContent = 'Сохранение...';
-    api.postNewCard(data).then((dataFromServer)=>{
+    popupWithFormAdd.renderLoading(true);
+    api.postNewCard(data)
+    .then((dataFromServer)=>{
       const newCard = createCard(dataFromServer, cardTemplate);
-      cardsContainer.prepend(newCard.createCard());
+      cardSection.prependItem(newCard);
+      popupWithFormAdd.close();
     })
     .catch(err => console.log(err))
     .finally(()=>{
-      formAddSubmit.textContent = lastText;
+      popupWithFormAdd.renderLoading(false);
     })
-    popupWithFormAdd.close();
   }
 });
 
 const popupWithFormAvatar = new PopupWithForm('#popup-avatar', {
   submitHandler: (data) =>{
-    const lastText = formAvatarSubmit.textContent;
-    formAvatarSubmit.textContent = 'Сохранение...';
+    popupWithFormAvatar.renderLoading(true);
     api.editProfileAvatar(data)
     .then((dataFromServer)=>{
-      profileAvatar.src = dataFromServer.avatar;
+      userInfo.setUserInfo({
+        name: dataFromServer.name ? dataFromServer.name : profileName.textContent,
+        info: dataFromServer.about ? dataFromServer.about : profileSub.textContent,
+        image: dataFromServer.avatar,
+        id: dataFromServer._id
+      });
+      popupWithFormAvatar.close();
     })
     .catch(err => console.log(err))
     .finally(()=>{
-      formAvatarSubmit.textContent = lastText;
+      popupWithFormAvatar.renderLoading(false);
     })
-    popupWithFormAvatar.close();
   }
 });
 
@@ -136,11 +141,12 @@ api.getAllInfo()
   userId = userData._id;
   cardSection.render(postAll);
 })
+.catch(err => console.log(err));
 
 
 function createCard(data){
   const  newCard = new Card(data, userId, cardTemplate, handleCardClick, handleCardDelete, handleLikePost);
-  return newCard;
+  return newCard.createCard();
 }
 
 function handleCardDelete(cardInstance){
@@ -148,7 +154,7 @@ function handleCardDelete(cardInstance){
   popupConfirm.setActionSubmit(()=>{
     api.deleteCard(cardInstance.getId())
     .then(() => {cardInstance.remove(); popupConfirm.close();})
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
   })
 }
 
@@ -162,7 +168,7 @@ function handleLikePost(instance){
     instance.setLikesData(dataCard)
     console.log(dataCard);
   })
-  .catch(err => console.log(err))
+  .catch(err => console.log(err));
 }
 
 function openEditForm(){

@@ -2,8 +2,7 @@ import { Popup } from "./Popup.js";
 export class PopupWithCardDeleter extends Popup{
     constructor(popupSelector, handleCardSubmit){
         super(popupSelector);
-        this._popupSelector = document.querySelector(popupSelector);
-        this._formElement = this._popupSelector.querySelector('.popup__form');
+        this._formElement = this._popupElement.querySelector('.popup__form');
         this._handleCardSubmit = handleCardSubmit;
     }
 
