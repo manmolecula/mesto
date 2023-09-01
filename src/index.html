@@ -47,6 +47,15 @@
                 </form>
             </div>
         </section>
+        <section id="popup-img" class="popup popup_place_img">
+            <div class="popup__img-container">
+                <button id="close-img" type="button" class="popup__close popup__close_place_img"></button>
+                <figure class="popup__figure">
+                    <img src="#" class="popup__img">
+                    <figcaption class="popup__caption"></figcaption>
+                </figure>
+            </div>
+        </section>
         <section id="popup-sure" class="popup">
             <div class="popup__sure-container">
                 <button id="close-sure" type="button" class="popup__sure-close"></button>
@@ -56,13 +65,17 @@
                 </form>
             </div>
         </section>
-        <section id="popup-img" class="popup popup_place_img">
-            <div class="popup__img-container">
-                <button id="close-img" type="button" class="popup__close popup__close_place_img"></button>
-                <figure class="popup__figure">
-                    <img src="#" class="popup__img">
-                    <figcaption class="popup__caption"></figcaption>
-                </figure>
+        <section id="popup-avatar" class="popup">
+            <div class="popup__container">
+                <button id="close-avatar" type="button" class="popup__close"></button>
+                <h2 class="popup__sure-title">Обновить аватар</h2>
+                <form novalidate id="form-avatar" name="popup" class="popup__form">
+                    <div class="popup__input-span">
+                        <input required id="form-avatar-link" class="popup__input popup__input_profile_subtitle" name="avatar" type="url" placeholder="Ссылка на картинку">
+                        <span id="avatar-error" class="popup__error"></span>
+                    </div>
+                    <button class="popup__btn" type="submit">Создать</button>
+                </form>
             </div>
         </section>
         <main class="main">

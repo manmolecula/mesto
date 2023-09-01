@@ -51,7 +51,7 @@ export class Api{
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
-                avatar: link
+                avatar: link.avatar
             })
         })
         .then(this._onResponse)

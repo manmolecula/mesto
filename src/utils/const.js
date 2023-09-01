@@ -16,6 +16,10 @@ const editBtn = document.querySelector('.profile__edit-btn');
 const addBtn = document.querySelector('.profile__add-btn');
 const formEdit = document.querySelector('#form-edit');
 const formAdd = document.querySelector('#form-add');
+const formAvatar = document.querySelector('#form-avatar');
+const formEditSubmit = formEdit.querySelector('.popup__btn');
+const formAddSubmit = formAdd.querySelector('.popup__btn');
+const formAvatarSubmit = formAvatar.querySelector('.popup__btn');
 const profileName = document.querySelector('.profile__name');
 const profileSub = document.querySelector('.profile__subtitle');
 const profileAvatar = document.querySelector('.profile__avatar');
@@ -24,6 +28,7 @@ const cardsContainer = document.querySelector('.elements__list');
 const profileNameValue = document.querySelector('.popup__input_profile_name');
 const profileSubValue = document.querySelector('.popup__input_profile_subtitle');
 const likeNumber = document.querySelector('elements__like-number');
+const avatarImg = document.querySelector('.profile__overlay');
 export {
   configApi,
   validationConfig,
@@ -31,6 +36,10 @@ export {
   addBtn,
   formEdit,
   formAdd,
+  formAvatar,
+  formEditSubmit,
+  formAddSubmit,
+  formAvatarSubmit,
   profileName,
   profileSub,
   profileAvatar,
@@ -38,5 +47,6 @@ export {
   cardsContainer,
   profileNameValue,
   profileSubValue,
-  likeNumber
+  likeNumber,
+  avatarImg
 };

@@ -5,6 +5,10 @@ import {
   addBtn,
   formEdit,
   formAdd,
+  formAvatar,
+  formEditSubmit,
+  formAddSubmit,
+  formAvatarSubmit,
   profileName,
   profileSub,
   profileAvatar,
@@ -12,7 +16,8 @@ import {
   cardsContainer,
   profileNameValue,
   profileSubValue,
-  configApi
+  configApi,
+  avatarImg
 }
 from '../utils/const.js';
 import {
@@ -67,12 +72,19 @@ popupWithImage.setEventListeners();
 
 const popupWithFormEdit = new PopupWithForm('#popup-edit', {
   submitHandler: (data) =>{
-    api.editProfile(data).then((dataFromServer) => {
+    const lastText = formEditSubmit.textContent;
+    formEditSubmit.textContent = 'Сохранение...';
+    api.editProfile(data)
+    .then((dataFromServer) => {
       userInfo.setUserInfo({
         name: dataFromServer.name,
-        info: dataFromServer.info,
+        info: dataFromServer.about,
         image: dataFromServer.image ? dataFromServer.image : profileAvatar.src
       });
+    })
+    .catch(err => console.log(err))
+    .finally(()=>{
+      formEditSubmit.textContent = lastText;
     });
     popupWithFormEdit.close();
   }
@@ -80,16 +92,39 @@ const popupWithFormEdit = new PopupWithForm('#popup-edit', {
 
 const popupWithFormAdd = new PopupWithForm('#popup-add', {
   submitHandler: (data) =>{
+    const lastText = formAddSubmit.textContent;
+    formAddSubmit.textContent = 'Сохранение...';
     api.postNewCard(data).then((dataFromServer)=>{
       const newCard = createCard(dataFromServer, cardTemplate);
       cardsContainer.prepend(newCard.createCard());
-    });
+    })
+    .catch(err => console.log(err))
+    .finally(()=>{
+      formAddSubmit.textContent = lastText;
+    })
     popupWithFormAdd.close();
+  }
+});
+
+const popupWithFormAvatar = new PopupWithForm('#popup-avatar', {
+  submitHandler: (data) =>{
+    const lastText = formAvatarSubmit.textContent;
+    formAvatarSubmit.textContent = 'Сохранение...';
+    api.editProfileAvatar(data)
+    .then((dataFromServer)=>{
+      profileAvatar.src = dataFromServer.avatar;
+    })
+    .catch(err => console.log(err))
+    .finally(()=>{
+      formAvatarSubmit.textContent = lastText;
+    })
+    popupWithFormAvatar.close();
   }
 });
 
 const formEditValidation = new FormValidator(validationConfig, formEdit);
 const formAddValidation = new FormValidator(validationConfig, formAdd);
+const formAvatarValidation = new FormValidator(validationConfig, formAvatar);
 
 const popupConfirm = new PopupWithCardDeleter('#popup-sure', null);
 popupConfirm.setEventListeners();
@@ -127,6 +162,7 @@ function handleLikePost(instance){
     instance.setLikesData(dataCard)
     console.log(dataCard);
   })
+  .catch(err => console.log(err))
 }
 
 function openEditForm(){
@@ -143,15 +179,24 @@ function openAddForm(){
   formAddValidation.cleanErrors();
 }
 
+function openAvatarForm(){
+  popupWithFormAvatar.open();
+  formAvatarValidation.disableButton();
+  formAvatarValidation.cleanErrors();
+}
+
 
 addBtn.addEventListener('click', openAddForm);
 editBtn.addEventListener('click', openEditForm);
+avatarImg.addEventListener('click', openAvatarForm);
 
 popupWithFormEdit.setEventListeners();
 popupWithFormAdd.setEventListeners();
+popupWithFormAvatar.setEventListeners();
 
 formEditValidation.enableValidation();
 formAddValidation.enableValidation();
+formAvatarValidation.enableValidation();
 
 
 
